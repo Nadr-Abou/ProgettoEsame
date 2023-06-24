@@ -41,13 +41,14 @@ public class App {
             PrintWriter out = null;
             try {
                 out = new PrintWriter(echoSocket.getOutputStream(), true);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                System.out.println("YOU MUST CONNECT THE SERVER!!");
             }
+
             BufferedReader in = null;
             try {
                 in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("cannot allocate bufferedreader");
             }
 
@@ -57,8 +58,8 @@ public class App {
                     System.out.println(ingresso);
                     if (f != null)
                         f.setFrase(ingresso);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+
                 }
             }
         }

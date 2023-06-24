@@ -9,7 +9,6 @@ import java.io.InputStream;
 
 public class CustomFrame extends JFrame implements Runnable{
     private int NOfRects;
-    private int imageY;
     private Thread thread;
     private String frase = "";
     public CustomFrame(int NOfRects) throws HeadlessException {
@@ -33,9 +32,13 @@ public class CustomFrame extends JFrame implements Runnable{
         int rectwidth = 50;
         int rectheight = 100;
 
-        g.drawString(frase, 200, 50);
 
-        for (int i=0; i<NOfRects; i++) {
+        backgroundDrawImage(g);
+
+
+
+
+        /*for (int i=0; i<NOfRects; i++) {
             rectwidth +=30;
             rectheight +=30;
 
@@ -43,17 +46,16 @@ public class CustomFrame extends JFrame implements Runnable{
             int y = yc - rectheight/2;
 
             g.drawRect(x, y, rectwidth, rectheight);
-        }
+        }*/
 
-        myDrawImage(g, imageY);
     }
 
 
 
 
-    private void myDrawImage(Graphics g, int imageY){
+    private void backgroundDrawImage(Graphics g){
         ClassLoader cl = this.getClass().getClassLoader();
-        InputStream url = cl.getResourceAsStream("vegetables-155616_1280.png");
+        InputStream url = cl.getResourceAsStream("notebook.jpg");
         BufferedImage img= null;
         try {
             img = ImageIO.read(url);
@@ -61,15 +63,29 @@ public class CustomFrame extends JFrame implements Runnable{
             e.printStackTrace();
             return;
         }
-        g.drawImage(img, 10,imageY, 150,150, null);
+        g.drawImage(img, 0, 0, this.getWidth(),this.getHeight(), null);
+    }
+
+
+    private void myDrawImage(Graphics g){
+        ClassLoader cl = this.getClass().getClassLoader();
+        InputStream url = cl.getResourceAsStream("LeftTank.png");
+        BufferedImage img= null;
+        try {
+            img = ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        g.drawImage(img, 10, 150, 150,150, null);
     }
 
     @Override
     public void run() {
         while(true) {
-            this.imageY += 20;
+
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

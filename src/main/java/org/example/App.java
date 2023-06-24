@@ -7,26 +7,32 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class MyClient {
+public class App {
+
+    static CustomFrame f = null;
 
     public static void main(String[] args) {
-        Player thisPlayer = new Player(3, 0, 0);
-        Player otherPlayer = new Player(3, 0, 0);
+        Player thisPlayer = new Player(3);
+        Player otherPlayer = new Player(3);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI(thisPlayer, otherPlayer);
             }
         });
+        while (f == null) {
+            System.out.println("aspettando");
+        }
+        clientMain(thisPlayer, otherPlayer, f);
+
     }
 
 
     private static void createAndShowGUI(Player thisPlayer, Player otherPlayer) {
-        CustomFrame f = new CustomFrame(thisPlayer, otherPlayer);
+        f = new CustomFrame(thisPlayer);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(1220, 686);
         f.setResizable(false);
         f.setVisible(true);
-        clientMain(thisPlayer, otherPlayer, f);
     }
 
     static void clientMain(Player thisPlayer, Player otherPlayer, CustomFrame f) {
@@ -57,33 +63,39 @@ public class MyClient {
             System.out.println("cannot allocate bufferedreader");
         }
 
-
-        Movimento movements = new Movimento(thisPlayer, otherPlayer, f, out);
-        movements.start();
-
-        thisPlayer.setY(250);
-        thisPlayer.setX(0);
-        otherPlayer.setY(250);
-        otherPlayer.setX(1220-100);
-
-        f.setNotReady(false);
-        f.repaint();
-
         try {
             String paramIniziali = in.readLine();
             /*SPACCHETTAMENTO JSON NELLE COORDINATE*/
-//                thisPlayer.setY();
-//                thisPlayer.setX();
-//                otherPlayer.setX();
-//                otherPlayer.setY();
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            System.out.println("Connettere il server");
+        }
+
+        thisPlayer.setY(250);
+        thisPlayer.setX(0);
+        otherPlayer.setY(500);
+        otherPlayer.setX(1220 - 100);
+
+        thisPlayer.setF(f);
+        otherPlayer.setF(f);
+
+        f.repaint();
+
+
+        if (thisPlayer.getX() < 500) {
+            f.setLeftPlayer(thisPlayer);
+            f.setRightPlayer(otherPlayer);
+        } else {
+            f.setLeftPlayer(otherPlayer);
+            f.setLeftPlayer(thisPlayer);
         }
 
 
-        while (true) {
+        Movimento movements = new Movimento(thisPlayer, otherPlayer, f, out);
+        Thread thread = new Thread(movements);
+        thread.start();
 
+        while (true) {
 
         }
 

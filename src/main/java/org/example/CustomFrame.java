@@ -11,32 +11,37 @@ import java.io.InputStream;
 
 public class CustomFrame extends JFrame implements Runnable {
     private Thread thread;
-    private boolean notReady = true;
+
     Player leftPlayer;
     Player rightPlayer;
-    Player thisPlayer;
-    Player otherPlayer;
 
 
-    public CustomFrame(Player thisPlayer, Player otherPlayer) throws HeadlessException {
-        this.leftPlayer = new Player(3,0, 250);
-        this.rightPlayer = new Player(3,1220 - 100, 250);
-        this.thisPlayer = thisPlayer;
-        this.otherPlayer = otherPlayer;
+
+    public CustomFrame(Player thisPlayer) throws HeadlessException {
         this.addKeyListener(thisPlayer);
         this.thread = new Thread(this);
         thread.start();
     }
 
 
+    public void setLeftPlayer(Player leftPlayer) {
+        this.leftPlayer = leftPlayer;
+    }
+
+    public void setRightPlayer(Player rightPlayer) {
+        this.rightPlayer = rightPlayer;
+    }
+
     public void paint(Graphics g) {
 
         super.paint(g);
 
-        if(!notReady){
-            leftPlayer = thisPlayer.getX() < 500 ? thisPlayer : otherPlayer;
-            rightPlayer = thisPlayer.getX() > 500 ? thisPlayer : otherPlayer;
+        if (leftPlayer == null || rightPlayer == null) {
+            blockDrawImage(g);
+            return;
         }
+
+
 
         int w = this.getWidth();
         int h = this.getHeight();
@@ -55,22 +60,21 @@ public class CustomFrame extends JFrame implements Runnable {
         rightTankImage(g);
         leftTankImage(g);
 
-
-        if(notReady){
-            blockDrawImage(g);
-        }
     }
 
     private void blockDrawImage(Graphics g) {
+
         ClassLoader cl = this.getClass().getClassLoader();
         InputStream url = cl.getResourceAsStream("initialIMG.png");
         BufferedImage img = null;
+
         try {
             img = ImageIO.read(url);
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
+
         g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), null);
     }
 
@@ -123,7 +127,7 @@ public class CustomFrame extends JFrame implements Runnable {
             e.printStackTrace();
             return;
         }
-        g.drawImage(img, leftPlayer.getX(), leftPlayer.getY(),100 ,100, null);
+        g.drawImage(img, leftPlayer.getX(), leftPlayer.getY(), 100, 100, null);
     }
 
     @Override
@@ -138,29 +142,6 @@ public class CustomFrame extends JFrame implements Runnable {
         }
     }
 
-
-    public void setNotReady(boolean notReady) {
-        this.notReady = notReady;
-    }
-
-
-
-
-//    @Override
-//    public void keyTyped(KeyEvent e) {
-//
-//    }
-//
-//
-//    @Override
-//    public void keyPressed(KeyEvent e) {
-//
-//    }
-//
-//    @Override
-//    public void keyReleased(KeyEvent e) {
-//
-//    }
 
 
 }

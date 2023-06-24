@@ -1,16 +1,15 @@
 package org.example;
 
 import java.awt.event.*;
-public class Player implements KeyListener{
+
+public class Player implements KeyListener {
     private int heart;
     private int x;
     private int y;
+    private CustomFrame f;
 
-    public Player(int heart, int x, int y){
+    public Player(int heart) {
         this.heart = heart;
-        this.x = x;
-        this.y = y;
-
     }
 
 
@@ -48,19 +47,28 @@ public class Player implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
-        switch (e.getKeyCode()){
+        System.out.println(y);
+        switch (e.getKeyCode()) {
+
             case 38: //tasto freccia su
-                y+=5;
+                if (this.y > 100)
+                    this.y -= 5;
                 break;
+
             case 40: //tasto freccia giù
-                y-=5;
+                if (this.y < (this.f.getHeight() - 100))
+                    y += 5;
                 break;
+
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    public void setF(CustomFrame f) {
+        this.f = f;
     }
 }

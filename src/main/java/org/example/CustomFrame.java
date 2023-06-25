@@ -60,6 +60,8 @@ public class CustomFrame extends JFrame implements Runnable {
         for (int i = 1; i <= rightPlayer.getHeart(); i++) {
             heartDrawImage(g, (w - 50) - (60 * i));
         }
+        g.setColor(Color.yellow);
+        g.drawLine(0,87,this.getWidth(),87);
 
         rightTankImage(g);
         leftTankImage(g);
@@ -105,7 +107,7 @@ public class CustomFrame extends JFrame implements Runnable {
             e.printStackTrace();
             return;
         }
-        g.drawImage(img, x, 50, this.getWidth() / 24, this.getHeight() / 16, null);
+        g.drawImage(img, x, 40, this.getWidth() / 24, this.getHeight() / 16, null);
     }
 
     private void rightTankImage(Graphics g) {

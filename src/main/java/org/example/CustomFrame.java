@@ -18,7 +18,11 @@ public class CustomFrame extends JFrame implements Runnable {
 
 
     public CustomFrame(Player thisPlayer) throws HeadlessException {
+
         this.addKeyListener(thisPlayer);
+
+        this.getContentPane().setBackground(Color.cyan);
+
         this.thread = new Thread(this);
         thread.start();
     }
@@ -47,7 +51,7 @@ public class CustomFrame extends JFrame implements Runnable {
         int h = this.getHeight();
 
 
-        backgroundDrawImage(g);
+        //backgroundDrawImage(g);
 
 
         for (int i = 1; i <= leftPlayer.getHeart(); i++) {

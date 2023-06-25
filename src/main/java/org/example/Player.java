@@ -52,12 +52,14 @@ public class Player implements KeyListener {
 
             case 38: //tasto freccia su
                 if (this.y > 100)
-                    this.y -= 5;
+                    this.y -= 20;
+                f.repaint(this.getX(),this.getY(),101,120);
                 break;
 
             case 40: //tasto freccia giù
                 if (this.y < (this.f.getHeight() - 100))
-                    y += 5;
+                    y += 20;
+                f.repaint(this.getX(),this.getY()-20,101,120);
                 break;
 
         }

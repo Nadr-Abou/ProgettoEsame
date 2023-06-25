@@ -54,7 +54,7 @@ public class Player extends Client implements KeyListener {
         switch (e.getKeyCode()) {
             case 38: //tasto freccia su
 
-                if (this.y > 120 && (System.currentTimeMillis() - lastPressProcessedUP) > 260) {
+                if (this.y > 120 && (System.currentTimeMillis() - lastPressProcessedUP) > 550) {
                     this.y -= 80;
                     f.repaint(this.getX(), this.getY(), 101, 180);
                     lastPressProcessedUP = System.currentTimeMillis();
@@ -62,7 +62,7 @@ public class Player extends Client implements KeyListener {
                 break;
 
             case 40: //tasto freccia giù
-                if (this.y < (this.f.getHeight() - 140) && (System.currentTimeMillis() - lastPressProcessedDown) > 260) {
+                if (this.y < (this.f.getHeight() - 140) && (System.currentTimeMillis() - lastPressProcessedDown) > 550) {
                     y += 80;
                     f.repaint(this.getX(), this.getY() - 80, 101, 180);
                     lastPressProcessedDown = System.currentTimeMillis();

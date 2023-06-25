@@ -9,6 +9,8 @@ public class Client {
     Player thisPlayer;
     Player otherPlayer;
     CustomFrame f;
+    PrintWriter out;
+    BufferedReader in;
 
     public Client(Player thisPlayer, Player otherPlayer, CustomFrame f) {
         this.thisPlayer = thisPlayer;
@@ -31,7 +33,7 @@ public class Client {
             System.out.println("cannot reach server " + e);
         }
 
-        PrintWriter out = null;
+
 
         try {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -39,13 +41,13 @@ public class Client {
             System.out.println("YOU MUST CONNECT THE SERVER!!");
         }
 
-        BufferedReader in = null;
 
         try {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         } catch (Exception e) {
             System.out.println("cannot allocate bufferedreader");
         }
+
 
         try {
             String paramIniziali = in.readLine();
@@ -55,10 +57,10 @@ public class Client {
             System.out.println("Connettere il server");
         }
 
-        thisPlayer.setY(250);
-        thisPlayer.setX(0);
-        otherPlayer.setY(500);
-        otherPlayer.setX(1220 - 100);
+        otherPlayer.setY(250);
+        otherPlayer.setX(0);
+        thisPlayer.setY(500);
+        thisPlayer.setX(1220 - 100);
 
         thisPlayer.setF(f);
         otherPlayer.setF(f);
@@ -71,7 +73,7 @@ public class Client {
             f.setRightPlayer(otherPlayer);
         } else {
             f.setLeftPlayer(otherPlayer);
-            f.setLeftPlayer(thisPlayer);
+            f.setRightPlayer(thisPlayer);
         }
 
 
